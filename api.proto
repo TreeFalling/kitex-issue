@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package kitex_issue;
+
+option go_package = "test/kitex-issue/kitex_gen";
+
+message PushRequest {
+  repeated sfixed64 toManIds = 1;
+  bytes msg = 2;
+}
+
+message PushResponse {
+  sfixed64 toManId = 1;
+  bytes msg = 2;
+}
+
+message GoPushRequest {
+  repeated int64 toManIds = 1;
+  bytes msg = 2;
+}
+
+message GoPushResponse {
+  // nothing
+}
+
+service GoPushService {
+  rpc OnPushMessage(stream PushRequest) returns (stream PushResponse) {}
+  rpc Push(GoPushRequest) returns (GoPushResponse) {}
+}
